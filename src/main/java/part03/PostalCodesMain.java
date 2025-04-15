@@ -33,7 +33,25 @@ public class PostalCodesMain {
         System.out.print("Mitä etsitään (esim. 00100 tai Helsinki)? ");
         String answer = scanner.nextLine(); // answer may be a postal code or a postal district name
 
-        // TODO: Implement your logic here
+        // Try direct match (postal code)
+        if (postalCodes.containsKey(answer)) {
+            System.out.println(postalCodes.get(answer));
+        } else {
+            // Normalize input to lowercase for case-insensitive comparison
+            String normalizedInput = answer.toLowerCase();
+            boolean found = false;
+
+            for (Map.Entry<String, String> entry : postalCodes.entrySet()) {
+                if (entry.getValue().equalsIgnoreCase(normalizedInput)) {
+                    System.out.println(entry.getKey());
+                    found = true;
+                }
+            }
+
+            if (!found) {
+                System.out.println("Ei tuloksia.");
+            }
+        }
 
         scanner.close();
     }
